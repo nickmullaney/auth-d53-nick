@@ -10,5 +10,5 @@ module.exports = (error, req, res, next) => {
     path: req.params,
     body: req.body,
     message: `Server Error: ${errorMessage}`,
-  })
+  });
 };

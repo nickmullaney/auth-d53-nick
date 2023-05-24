@@ -6,4 +6,4 @@ module.exports = (req, res, next) => {
     route: req.baseUrl,
     message: 'Not Found',
   });
-}
+};

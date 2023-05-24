@@ -4,7 +4,7 @@ const express = require('express');
 const authRouter = require('./auth/router');
 const notFound = require('./middleware/404');
 const errorHandler = require('./middleware/500');
-const { userModel } = require('./auth/models');
+const acl = require('./auth/middleware/acl');
 const bearer = require('./auth/middleware/bearer');
 
 const app = express();
@@ -19,9 +19,20 @@ app.get('/', (req, res, next) => {
   res.status(200).send('proof of life');
 });
 
-app.get('/users',bearer, async(req, res, next) =>{
-  const users = await userModel.findAll();
-  res.status(200).send(users);
+app.get('/read', bearer, acl('read'), (req, res, next) =>{
+  res.status(200).send('You have read permissions');
+});
+
+app.get('/create', bearer, acl('create'), (req, res, next) =>{
+  res.status(200).send('You have read permissions');
+});
+
+app.get('/update', bearer, acl('update'), (req, res, next) =>{
+  res.status(200).send('You have update permissions');
+});
+
+app.get('/delete', bearer, acl('delete'), (req, res, next) =>{
+  res.status(200).send('You have delete permissions');
 });
 
 app.use('*', notFound);

@@ -12,10 +12,11 @@ router.post('/signup', async (req, res, next) => {
   // great proof of life
   // res.status(200).send('this route works');
   try {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
     const encryptedPassword = await bcrypt.hash(password, 5);
     let newUser = await userModel.create({
       username,
+      role,
       password: encryptedPassword,
     });
     res.status(200).send(newUser);
